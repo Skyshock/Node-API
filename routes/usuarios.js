@@ -35,10 +35,10 @@ router.post("/login", (req, res, next)=>{
         db.end((err) => { console.log("Closed")})  
     });
 });
-/*
-router.post("/", (req, res, next)=> {
+
+router.post("/registro", (req, res, next)=> {
     const db = mysql.createConnection(dbconn);
-    const query = `INSERT INTO usuarios (nombreUsuario, correoElectronico, password) VALUES ('${req.body.name}','${req.body.mail}','${req.body.password}')`;
+    const query = `INSERT INTO users (username, name, email, password, validatedAcc) VALUES ('${req.body.user}', '${req.body.name}','${req.body.mail}','${req.body.password}', 1)`;
     db.query(query, (err,result, fields) => {
         if(err){
             res.status(500);
@@ -50,17 +50,4 @@ router.post("/", (req, res, next)=> {
         db.end((err) => { console.log("Closed")})  
     })
 });
-*/
-const aut = (req, res, next) =>{
-    try{
-        const token = req.headers.autorization.split("")[1];
-        const decoded = jwt.verify(token, process.env.JWT_KEY || "debugkey");
-        req.username = decoded;
-        next();
-    }
-    catch{
-        res.estatus(401);
-        res.json({message: 'Aith failed'});
-    }
-}
 module.exports = router;
