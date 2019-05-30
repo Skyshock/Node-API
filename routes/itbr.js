@@ -3,11 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbconn = require('../config/database');
 
-//tokens
-const jwt = require('jsonwebtoken');
-const auth = require("../middleware/authHeader.js");
-router.use(auth);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM itbr";
@@ -61,11 +56,17 @@ router.put("/", (req, res, next) => {
     console.log(qry);
     query = `UPDATE itbr SET `;
     if(req.body.itemid){
-        query += `itemid = '${req.body.itemid}', `;
+        query += `itemid = '${req.body.itemid}'`;
+        if(req.body.branchid || req.body.aviable){
+            query += `, `;
+        }
     }
 
     if(req.body.branchid){
-        query += `branchid = '${req.body.branchid}', `;
+        query += `branchid = '${req.body.branchid}'`;
+        if(req.body.aviable){
+            query += `, `;
+        }
     }
 
     if(req.body.aviable){
@@ -99,5 +100,20 @@ router.put("/", (req, res, next) => {
             res.json({ code: 0, message: "El id no existe" });
         }   
     });
+});
+
+// Eliminar un itbr por id
+router.delete("/", (req,res, next) => {
+    const db = mysql.createConnection(dbconn);
+    const query = `DELETE FROM itbr WHERE id = ${req.body.idItbr}`;
+    db.query(query, (err,result, fields) => {
+        if(err){
+            res.status(500);
+            res.json({code: 0, message: "Algo salió mal"})
+        }
+        res.status(200);
+        res.json({ code: 1, message: "itbr eliminado correctamente"})
+        db.end((err) => { console.log("Closed")})
+    })
 });
 module.exports = router;
