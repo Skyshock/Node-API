@@ -3,10 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbconn = require('../config/database');
 
-//tokens
-const jwt = require('jsonwebtoken');
-const auth = require("../middleware/authHeader.js");
-router.use(auth);
 
 //Trae todos los  datos de la tabla
 router.get("/", (req, res, next) => {
