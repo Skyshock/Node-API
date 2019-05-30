@@ -3,11 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbconn = require('../config/database');
 
-//tokens
-const jwt = require('jsonwebtoken');
-const auth = require("../middleware/authHeader.js");
-router.use(auth);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM itor";
@@ -22,6 +17,7 @@ router.get("/", (req, res, next) => {
         db.end((err) => { console.log("Closed") })
     });
 });
+
 router.get("/:id", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `SELECT * FROM itor WHERE id = ${req.params.id}`;
@@ -99,4 +95,20 @@ router.put("/", (req, res, next) => {
         }   
     });
 });
+
+// Eliminar un itor por id
+router.delete("/", (req,res, next) => {
+    const db = mysql.createConnection(dbconn);
+    const query = `DELETE FROM itor WHERE id = ${req.body.idItor}`;
+    db.query(query, (err,result, fields) => {
+        if(err){
+            res.status(500);
+            res.json({code: 0, message: "Algo salió mal"})
+        }
+        res.status(200);
+        res.json({ code: 1, message: "Itor eliminado correctamente"})
+        db.end((err) => { console.log("Closed")})
+    })
+});
+
 module.exports = router;
