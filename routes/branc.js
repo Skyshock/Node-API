@@ -8,10 +8,7 @@ const jwt = require('jsonwebtoken');
 const auth = require("../middleware/authHeader.js");
 router.use(auth);
 
-// const fs = require('mysql');
-// let routes = fs.readFileSync('../config/database');
-// routes = JSON.parse(routes);
-
+//Trae todos los  datos de la tabla
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM branc";
@@ -41,26 +38,12 @@ router.get("/:id", (req, res, next) => {
     })
 });
 
-/*
+//Inserta datos
+
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
-    const query = `SELECT * FROM camiones WHERE idCamion = ${req.params.id}`;
-    db.query(query, (err,result, fields) => {
-        if(err){
-            res.status(500);
-            res.json({code: 0, message: "Algo salió mal"})
-        }
-        console.log(result);
-        res.status(200);
-        res.json({ code: 1, message: result})
-        db.end((err) => { console.log("Closed")})
-    });
-});
-*/
-router.post("/", (req, res, next) => {
-    const db = mysql.createConnection(dbconn);
-    const query = `INSERT INTO branc ( name, email, categories, deliveryDay) 
-                   VALUES ('${req.body.name}', '${req.body.providerid}', '${req.body.categoriy}', '${req.body.deliveryDay}')`;
+    const query = `INSERT INTO branc ( name, address, visitDay) 
+                   VALUES ('${req.body.name}', '${req.body.address}', '${req.body.visitDay}', '${req.body.deliveryDay}')`;
     db.query(query, (err, result, fields) => {
         console.log(err)
         if (err) {
@@ -73,7 +56,7 @@ router.post("/", (req, res, next) => {
         db.end((err) => { console.log("closed") });
     });
 });
-
+//Cambios una vez creadio el campo
 router.put("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const qry = `SELECT COUNT(*) as total FROM branc WHERE id = ${req.body.id}`;
