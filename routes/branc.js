@@ -43,7 +43,7 @@ router.get("/:id", (req, res, next) => {
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `INSERT INTO branc ( name, address, visitDay) 
-                   VALUES ('${req.body.name}', '${req.body.address}', '${req.body.visitDay}', '${req.body.deliveryDay}')`;
+                   VALUES ('${req.body.name}', '${req.body.address}', '${req.body.visitDay}'s)`;
     db.query(query, (err, result, fields) => {
         console.log(err)
         if (err) {

@@ -8,10 +8,6 @@ const jwt = require('jsonwebtoken');
 const auth = require("../middleware/authHeader.js");
 router.use(auth);
 
-// const fs = require('mysql');
-// let routes = fs.readFileSync('../config/database');
-// routes = JSON.parse(routes);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM itor";
@@ -40,7 +36,6 @@ router.get("/:id", (req, res, next) => {
         db.end((err) => { console.log("Closed") })
     })
 });
-
 
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);

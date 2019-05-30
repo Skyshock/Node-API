@@ -7,11 +7,6 @@ const dbconn = require('../config/database');
 const jwt = require('jsonwebtoken');
 const auth = require("../middleware/authHeader.js");
 router.use(auth);
-
-// const fs = require('mysql');
-// let routes = fs.readFileSync('../config/database');
-// routes = JSON.parse(routes);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM provider";
@@ -41,22 +36,6 @@ router.get("/:id", (req, res, next) => {
     })
 });
 
-/*
-router.post("/", (req, res, next) => {
-    const db = mysql.createConnection(dbconn);
-    const query = `SELECT * FROM camiones WHERE idCamion = ${req.params.id}`;
-    db.query(query, (err,result, fields) => {
-        if(err){
-            res.status(500);
-            res.json({code: 0, message: "Algo salió mal"})
-        }
-        console.log(result);
-        res.status(200);
-        res.json({ code: 1, message: result})
-        db.end((err) => { console.log("Closed")})
-    });
-});
-*/
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `INSERT INTO provider (name, email, categories, deliveryDay) 
@@ -86,8 +65,8 @@ router.put("/", (req, res, next) => {
         query += `email = '${req.body.email}', `;
     }
 
-    if(req.body.categoties){
-        query += `categoties = '${req.body.categoties}' `;
+    if(req.body.categories){
+        query += `categories = '${req.body.categories}' `;
     }
     
     if(req.body.deliveryDay){

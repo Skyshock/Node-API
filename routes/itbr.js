@@ -8,10 +8,6 @@ const jwt = require('jsonwebtoken');
 const auth = require("../middleware/authHeader.js");
 router.use(auth);
 
-// const fs = require('mysql');
-// let routes = fs.readFileSync('../config/database');
-// routes = JSON.parse(routes);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM itbr";
@@ -69,7 +65,7 @@ router.put("/", (req, res, next) => {
     }
 
     if(req.body.branchid){
-        query += `branch = '${req.body.branch}', `;
+        query += `branchid = '${req.body.branchid}', `;
     }
 
     if(req.body.aviable){

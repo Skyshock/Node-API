@@ -9,10 +9,6 @@ const jwt = require('jsonwebtoken');
 const auth = require("../middleware/authHeader.js");
 router.use(auth);
 
-// const fs = require('mysql');
-// let routes = fs.readFileSync('../config/database');
-// routes = JSON.parse(routes);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM item";
@@ -42,22 +38,6 @@ router.get("/:id", (req, res, next) => {
     })
 });
 
-/*
-router.post("/", (req, res, next) => {
-    const db = mysql.createConnection(dbconn);
-    const query = `SELECT * FROM camiones WHERE idCamion = ${req.params.id}`;
-    db.query(query, (err,result, fields) => {
-        if(err){
-            res.status(500);
-            res.json({code: 0, message: "Algo salió mal"})
-        }
-        console.log(result);
-        res.status(200);
-        res.json({ code: 1, message: result})
-        db.end((err) => { console.log("Closed")})
-    });
-});
-*/
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `INSERT INTO item ( name, providerid, categoriy, price) 
@@ -75,7 +55,6 @@ router.post("/", (req, res, next) => {
     });
 });
 
-// Update camiones
 router.put("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const qry = `SELECT COUNT(*) as total FROM item WHERE id = ${req.body.id}`;
