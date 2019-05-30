@@ -3,10 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbconn = require('../config/database');
 
-//tokens
-const jwt = require('jsonwebtoken');
-const auth = require("../middleware/authHeader.js");
-router.use(auth);
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM provider";
@@ -21,6 +17,7 @@ router.get("/", (req, res, next) => {
         db.end((err) => { console.log("Closed") })
     });
 });
+
 router.get("/:id", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `SELECT * FROM provider WHERE id = ${req.params.id}`;
@@ -52,21 +49,32 @@ router.post("/", (req, res, next) => {
         db.end((err) => { console.log("closed") });
     });
 });
+
+//Editar los elementos de provider
 router.put("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const qry = `SELECT COUNT(*) as total FROM provider WHERE id = ${req.body.id}`;
     console.log(qry);
     query = `UPDATE provider SET `;
     if(req.body.name){
-        query += `name = '${req.body.name}', `;
+        query += `name = '${req.body.name}'`;
+        if(req.body.email || req.body.categories || req.body.deliveryDay){
+            query += `, `;
+        }
     }
 
     if(req.body.email){
-        query += `email = '${req.body.email}', `;
+        query += `email = '${req.body.email}'`;
+        if(req.body.categories || req.body.deliveryDay){
+            query += `, `;
+        }
     }
 
     if(req.body.categories){
         query += `categories = '${req.body.categories}' `;
+        if(req.body.deliveryDay){
+            query += `, `;
+        }
     }
     
     if(req.body.deliveryDay){
@@ -101,4 +109,20 @@ router.put("/", (req, res, next) => {
         }   
     });
 });
+
+// Eliminar un proveedor por id
+router.delete("/", (req,res, next) => {
+    const db = mysql.createConnection(dbconn);
+    const query = `DELETE FROM provider WHERE id = ${req.body.id}`;
+    db.query(query, (err,result, fields) => {
+        if(err){
+            res.status(500);
+            res.json({code: 0, message: "Algo salió mal"})
+        }
+        res.status(200);
+        res.json({ code: 1, message: "Proveedor eliminado correctamente"})
+        db.end((err) => { console.log("Closed")})
+    })
+});
+
 module.exports = router;
