@@ -1,0 +1,35 @@
+INSERT INTO `branc` (`id`, `name`, `address`, `visitDay`) VALUES (NULL, 'Tony´s House', 'Iztapalapa #235 Edo. de México', 'Martes');
+INSERT INTO `branc` (`id`, `name`, `address`, `visitDay`) VALUES (NULL, 'Informaticos', 'Juriquilla #12 Queretaro', 'Jueves');
+INSERT INTO `branc` (`id`, `name`, `address`, `visitDay`) VALUES (NULL, 'Office Depot', 'Juriquilla #45 Queretaro', 'Viernes');
+INSERT INTO `branc` (`id`, `name`, `address`, `visitDay`) VALUES (NULL, 'Office Max', 'Juriquilla #25 Queretaro', 'Lunes');
+INSERT INTO `branc` (`id`, `name`, `address`, `visitDay`) VALUES (NULL, 'GregCode', 'Ecatepec #287 Queretaro', 'Domingo');
+
+INSERT INTO `itbr` (`id`, `itemid`, `branchid`, `aviable`) VALUES (NULL, '5', '1', '1');
+INSERT INTO `itbr` (`id`, `itemid`, `branchid`, `aviable`) VALUES (NULL, '2', '2', '0');
+INSERT INTO `itbr` (`id`, `itemid`, `branchid`, `aviable`) VALUES (NULL, '4', '3', '1');
+INSERT INTO `itbr` (`id`, `itemid`, `branchid`, `aviable`) VALUES (NULL, '3', '4', '1');
+INSERT INTO `itbr` (`id`, `itemid`, `branchid`, `aviable`) VALUES (NULL, '1', '5', '1');
+
+INSERT INTO `item` (`id`, `name`, `providerid`, `category`, `price`) VALUES (NULL, 'Borrador', '3', 'Borrador', '3');
+INSERT INTO `item` (`id`, `name`, `providerid`, `category`, `price`) VALUES (NULL, 'Corrector', '4', 'Borrador', '2');
+INSERT INTO `item` (`id`, `name`, `providerid`, `category`, `price`) VALUES (NULL, 'Lapiz', '1', 'Lapices', '4');
+INSERT INTO `item` (`id`, `name`, `providerid`, `category`, `price`) VALUES (NULL, 'Pluma', '2', 'Big', '5');
+INSERT INTO `item` (`id`, `name`, `providerid`, `category`, `price`) VALUES (NULL, 'Borrador Coreano', '3', 'Borrador', '1');
+
+INSERT INTO `itor` (`id`, `itemid`, `orderid`) VALUES (NULL, '1', '2'); 
+INSERT INTO `itor` (`id`, `itemid`, `orderid`) VALUES (NULL, '3', '4');
+INSERT INTO `itor` (`id`, `itemid`, `orderid`) VALUES (NULL, '2', '5');
+INSERT INTO `itor` (`id`, `itemid`, `orderid`) VALUES (NULL, '5', '3');
+INSERT INTO `itor` (`id`, `itemid`, `orderid`) VALUES (NULL, '4', '1');
+
+INSERT INTO `orders` (`id`, `totalPrice`, `payed`, `userid`, `paidOut`) VALUES (NULL, '100', '50', '1', '0'); 
+INSERT INTO `orders` (`id`, `totalPrice`, `payed`, `userid`, `paidOut`) VALUES (NULL, '20', '10', '3', '0');
+INSERT INTO `orders` (`id`, `totalPrice`, `payed`, `userid`, `paidOut`) VALUES (NULL, '2000', '100', '2', '0');
+INSERT INTO `orders` (`id`, `totalPrice`, `payed`, `userid`, `paidOut`) VALUES (NULL, '30', '10', '4', '0');
+INSERT INTO `orders` (`id`, `totalPrice`, `payed`, `userid`, `paidOut`) VALUES (NULL, '2020', '1000', '5', '0');
+
+INSERT INTO `provider` (`id`, `name`, `email`, `categories`, `deliveryDay`) VALUES (NULL, 'Dell', 'Dell@contacto.com', 'Borradores', 'Domingo'); 
+INSERT INTO `provider` (`id`, `name`, `email`, `categories`, `deliveryDay`) VALUES (NULL, 'HP', 'HP@contacto.com', 'Lapices', 'Jueves');
+INSERT INTO `provider` (`id`, `name`, `email`, `categories`, `deliveryDay`) VALUES (NULL, 'Asus', 'Asus@contacto.com', 'Plumas', 'Jueves');
+INSERT INTO `provider` (`id`, `name`, `email`, `categories`, `deliveryDay`) VALUES (NULL, 'Muebles Troncozo', 'Muebles Troncozo@contacto.com', 'Lapices', 'Jueves');
+INSERT INTO `provider` (`id`, `name`, `email`, `categories`, `deliveryDay`) VALUES (NULL, 'BIC', 'BIC@contacto.com', 'Plumas', 'Jueves');
