@@ -3,11 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbconn = require('../config/database');
 
-//tokens
-const jwt = require('jsonwebtoken');
-const auth = require("../middleware/authHeader.js");
-router.use(auth);
-
 router.get("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = "SELECT * FROM orders";
@@ -22,6 +17,7 @@ router.get("/", (req, res, next) => {
         db.end((err) => { console.log("Closed") })
     });
 });
+
 router.get("/:id", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `SELECT * FROM orders WHERE id = ${req.params.id}`;
@@ -54,7 +50,7 @@ router.post("/", (req, res, next) => {
     });
 });
 
-// Update camiones
+// Update orders
 router.put("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const qry = `SELECT COUNT(*) as total FROM orders WHERE id = ${req.body.id}`;
@@ -63,13 +59,13 @@ router.put("/", (req, res, next) => {
     
     if(req.body.totalPrice){
         query += `totalPrice = '${req.body.totalPrice}' `;
-        if(req.body.payed){
+        if(req.body.payed || userid || paidOut){
             query += `, `;
         }
     }
     if(req.body.payed){
         query += `payed = '${req.body.payed}'`;
-        if(req.body.userid){
+        if(req.body.userid || paidOut){
             query += `, `;
         }
     }
@@ -114,6 +110,22 @@ router.put("/", (req, res, next) => {
         }   
     });
 });
+
+// Eliminar un orders por id
+router.delete("/", (req,res, next) => {
+    const db = mysql.createConnection(dbconn);
+    const query = `DELETE FROM orders WHERE id = ${req.body.id}`;
+    db.query(query, (err,result, fields) => {
+        if(err){
+            res.status(500);
+            res.json({code: 0, message: "Algo salió mal"})
+        }
+        res.status(200);
+        res.json({ code: 1, message: "Branch eliminado correctamente"})
+        db.end((err) => { console.log("Closed")})
+    })
+});
+
 
 
 module.exports = router;
