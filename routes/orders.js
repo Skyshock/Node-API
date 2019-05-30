@@ -37,23 +37,6 @@ router.get("/:id", (req, res, next) => {
     })
 });
 
-/*
-router.post("/", (req, res, next) => {
-    const db = mysql.createConnection(dbconn);
-    const query = `SELECT * FROM camiones WHERE idCamion = ${req.params.id}`;
-    db.query(query, (err,result, fields) => {
-        if(err){
-            res.status(500);
-            res.json({code: 0, message: "Algo salió mal"})
-        }
-        console.log(result);
-        res.status(200);
-        res.json({ code: 1, message: result})
-        db.end((err) => { console.log("Closed")})
-    });
-});
-*/
-
 router.post("/", (req, res, next) => {
     const db = mysql.createConnection(dbconn);
     const query = `INSERT INTO orders ( totalPrice, payed, userid, paidOut) 
@@ -80,13 +63,22 @@ router.put("/", (req, res, next) => {
     
     if(req.body.totalPrice){
         query += `totalPrice = '${req.body.totalPrice}' `;
+        if(req.body.payed){
+            query += `, `;
+        }
     }
     if(req.body.payed){
-        query += `payed = '${req.body.payed}', `;
+        query += `payed = '${req.body.payed}'`;
+        if(req.body.userid){
+            query += `, `;
+        }
     }
 
     if(req.body.userid){
-        query += `userid = '${req.body.userid}', `;
+        query += `userid = '${req.body.userid}' `;
+        if(req.body.paidOut){
+            query += `, `;
+        }
     }
 
     if(req.body.paidOut){

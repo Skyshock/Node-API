@@ -60,11 +60,14 @@ router.put("/", (req, res, next) => {
     console.log(qry);
     query = `UPDATE itor SET `;
     if(req.body.itemid){
-        query += `itemid = '${req.body.itemid}', `;
+        query += `itemid = '${req.body.itemid}' `;
+            if(req.body.orderid){
+                 query += `, `;
+             }
     }
 
     if(req.body.orderid){
-        query += `orderid = '${req.body.orderid}', `;
+        query += `orderid = '${req.body.orderid}' `;
     }
 
     query += `WHERE id = ${req.body.id} `; 
