@@ -28,12 +28,11 @@ app.get("/", (req, res, next) => {
 });
 
 
-app.use('/branc', branc, auth);
-app.use('/itbr', itbr, auth);
-app.use('/item', item, auth);
-app.use('/itor', itor, auth);
-app.use('/orders', orders, auth);
-app.use('/provider', provider, auth);
+app.use('/branc', auth, branc);
+app.use('/itbr', auth, itbr);
+app.use('/item', auth, item);
+app.use('/itor', auth, itor);
+app.use('/orders', auth, orders);
+app.use('/provider', auth, provider);
 app.use('/usuarios', usuarios);
-
 module.exports = app;
